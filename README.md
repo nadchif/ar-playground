@@ -2,12 +2,12 @@
 Random AR experiments using ("https://github.com/jeromeetienne/AR.js/blob/master/README.md", "AR.js")
 
 
-##How it works
-1. Visit ("https://github.com/jeromeetienne/AR.js/blob/master/README.md") via your phone/tablet browser
+## How it works
+1. Visit "https://nadchif.github.com/ar-playground") via your phone/tablet browser
 
 -OR-
 
 Scan this QR code on your phone
 
-2. You point over the camera over ("https://github.com/jeromeetienne/AR.js/blob/master/README.md", "this") map. You can print the map, or display it from a tablet or PC screen.
+2. You point over the camera over [this] "https://github.com/nadchif/ar-playground/blob/master/assets/experience/pattern-map.png" map. You can print the map, or display it from a tablet or PC screen. Ensure that the whole map AND BLACK MARGINS are visible on the camera screen.
 
