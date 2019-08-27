@@ -12,5 +12,5 @@ Scan the QR code below
 ![QR picture](https://github.com/nadchif/ar-playground/blob/master/assets/experience/qr.png)
 
 
-2. You point over the camera over [this]https://github.com/nadchif/ar-playground/blob/master/assets/experience/pattern-map.png map. You can print the map, or display it from a tablet or PC screen. Ensure that the whole map AND BLACK MARGINS are visible on the camera screen.
+2. You point over the camera over [this](https://github.com/nadchif/ar-playground/blob/master/assets/experience/pattern-map.png) map. You can print the map, or display it from a tablet or PC screen. Ensure that the whole map AND BLACK MARGINS are visible on the camera screen.
 
