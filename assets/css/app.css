@@ -1,0 +1,157 @@
+html {
+    height: 100%;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background: #333;
+    color: #fff;
+    height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+
+.infowindow {
+    background: #382a2a;
+    padding: 1em;
+    width: 85%;
+    max-width: 640px;
+    margin: auto;
+    box-shadow: 0px 0px 5em 1px #222;
+
+}
+
+.btn {
+    padding: 0.6em;
+    background: #000;
+    color: orange;
+    border: none;
+}
+
+.btn.proceed {
+    display: block;
+    width: 100%;
+    max-width: 480px;
+    font-size: 1.1em;
+}
+
+.btn.btnClose {
+    font-size: 0.9em;
+    float: right;
+    margin-right: 2em;
+}
+
+
+.btn:active,
+.btn:focus {
+    outline: none;
+    border: none;
+}
+
+.btn:hover {
+    background: #222;
+    color: red;
+}
+
+
+@-webkit-keyframes ping {
+    0% {
+        -webkit-transform: scale(0.2);
+        transform: scale(0.2);
+        opacity: 0.8;
+    }
+
+    80% {
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: scale(2.2);
+        transform: scale(2.2);
+        opacity: 0;
+    }
+}
+
+@keyframes ping {
+    0% {
+        -webkit-transform: scale(0.2);
+        transform: scale(0.2);
+        opacity: 0.8;
+    }
+
+    80% {
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: scale(2.2);
+        transform: scale(2.2);
+        opacity: 0;
+    }
+}
+
+.ping {
+
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border-radius: 0.5em;
+    background: red;
+    -webkit-animation: ping 1.2s ease-in-out infinite both;
+    animation: ping 1.2s ease-in-out infinite both;
+}
+
+#appStatus {
+    position: fixed;
+    bottom: 0px;
+    color: #bbb;
+    width: 100%;
+    padding: 0.5em;
+}
+
+.legend {
+    background: rgba(0, 0, 0, 0.5);
+    height: 2em;
+    position: fixed;
+    top: 0px;
+    color: #fff;
+    width: 100%;
+    padding: 0.5em;
+}
+
+.bg-red {
+    background: red;
+}
+
+.bg-green {
+    background: green;
+}
+
+.bg-yellow {
+    background: yellow;
+}
+
+.bg-blue {
+    background: blueviolet;
+}
+
+.legend-blk {
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    margin-right: 0.2em;
+}
+.legenditems{
+    white-space:nowrap;
+    font-size: 0.7em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
