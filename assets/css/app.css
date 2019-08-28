@@ -1,8 +1,10 @@
 html {
 padding: 0px;
+margin:0px;
 }
 
 body {
+    margin:0px;
     padding: 0px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     background-image: url('https://raw.githubusercontent.com/nadchif/ar-playground/master/assets/img/street_zombies.jpg');
