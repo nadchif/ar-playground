@@ -30,13 +30,12 @@ function ARapp() {
         //cache the AR experience here in the background;
         statusBar.innerHTML = "<span class='ping'></span> Buffering Experience..."
         appState.isBuffering = true;
-        fetch("assets/experience/scene.html")
+        fetch("assets/experience/lazyload.html")
             .then(response => response.text())
             .then(data => {
                 appState.cachedScene = data;
                 statusBar.innerHTML = "Ready"
                 appState.isBuffering = false;
-
             })
             .catch(e => {
                 alert("Sorry, an error occured while loading your secret map");
