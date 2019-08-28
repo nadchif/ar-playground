@@ -164,3 +164,17 @@ body {
     right:0px;
     bottom:0px;
 }
+#welcomeScreen{
+    height:100%;
+    width:100%;
+}
+#experienceScreen{
+    height:100%;
+    width:100%;
+}
+.scr-hidden{
+    display:none;
+}
+.scr-show{
+    display: "";
+}

@@ -1,7 +1,8 @@
 function ARapp() {
     const startButton = document.getElementById("startBtn");
     const statusBar = document.getElementById("appStatus");
-    const viewPort = document.getElementById("appBody");
+    const welcomeScreen = document.getElementById("welcomeScreen");
+    const experienceScreen = document.getElementById("experienceScreen");
     const appState = {
         isBuffering: false,
         cachedScene: '',
@@ -19,8 +20,9 @@ function ARapp() {
     }
 
     const startExperience = () => {
-        appState.history = viewPort.innerHTML;
-        viewPort.innerHTML = appState.cachedScene;
+        welcomeScreen.classList.add("scr-hidden");
+        experienceScreen.classList.remove("scr-hidden");
+        experienceScreen.classList.add("scr-visible");
         window.setTimeout(() => {
             document.querySelector(".btnClose").addEventListener("click", closeExperience);
         }, 1000);
@@ -33,7 +35,7 @@ function ARapp() {
         fetch("assets/experience/lazyload.html")
             .then(response => response.text())
             .then(data => {
-                appState.cachedScene = data;
+                experienceScreen.innerHTML = data;
                 statusBar.innerHTML = "Ready"
                 appState.isBuffering = false;
             })
