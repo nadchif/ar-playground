@@ -1,9 +1,9 @@
 # ar-playground
-Random AR experiments using ("https://github.com/jeromeetienne/AR.js/blob/master/README.md", "AR.js")
+Random AR experiments using [AR.js]("https://github.com/jeromeetienne/AR.js/blob/master/README.md", "AR.js")
 
 
 ## How it works
-1. Visit "https://nadchif.github.io/ar-playground/") via your phone/tablet browser
+1. Visit "https://nadchif.github.io/ar-playground/" via your phone/tablet browser
 
 ⋅⋅⋅-OR-
 
