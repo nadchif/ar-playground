@@ -1,5 +1,5 @@
 html {
-    
+padding: 0px;
 }
 
 body {
@@ -169,11 +169,13 @@ body {
     bottom:0px;
 }
 #welcomeScreen{
+    margin: 0px;
     background: #000000cc;
     height:100%;
     width:100%;
 }
 #experienceScreen{
+    margin: 0px;
     height:100%;
     width:100%;
 }
