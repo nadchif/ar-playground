@@ -5308,7 +5308,7 @@ Object.assign( ARjs.Context.prototype, THREE.EventDispatcher.prototype );
 // ARjs.Context.baseURL = '../'
 // default to github page
 ARjs.Context.baseURL = 'https://jeromeetienne.github.io/AR.js/three.js/'
-ARjs.Context.REVISION = '1.7.8';
+ARjs.Context.REVISION = '1.7.2';
 
 /**
  * Create a default camera for this trackingBackend
@@ -5668,26 +5668,26 @@ var THREEx = THREEx || {}
  * - you can use this class to understand how to tune your specific usecase
  * - it is made to help people to build parameters without understanding all the underlying details.
  */
-ARjs.Profile = THREEx.ArToolkitProfile = function () {
-    this.reset()
+ARjs.Profile = THREEx.ArToolkitProfile = function(){
+	this.reset()
 
-    this.performance('default')
+	this.performance('default')
 }
 
 
-ARjs.Profile.prototype._guessPerformanceLabel = function () {
-    var isMobile = navigator.userAgent.match(/Android/i)
-        || navigator.userAgent.match(/webOS/i)
-        || navigator.userAgent.match(/iPhone/i)
-        || navigator.userAgent.match(/iPad/i)
-        || navigator.userAgent.match(/iPod/i)
-        || navigator.userAgent.match(/BlackBerry/i)
-        || navigator.userAgent.match(/Windows Phone/i)
-        ? true : false
-    if (isMobile === true) {
-        return 'phone-normal'
-    }
-    return 'desktop-normal'
+ARjs.Profile.prototype._guessPerformanceLabel = function() {
+	var isMobile = navigator.userAgent.match(/Android/i)
+			|| navigator.userAgent.match(/webOS/i)
+			|| navigator.userAgent.match(/iPhone/i)
+			|| navigator.userAgent.match(/iPad/i)
+			|| navigator.userAgent.match(/iPod/i)
+			|| navigator.userAgent.match(/BlackBerry/i)
+			|| navigator.userAgent.match(/Windows Phone/i)
+			? true : false 
+	if( isMobile === true ){
+		return 'phone-normal'
+	}
+	return 'desktop-normal'
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -5698,21 +5698,21 @@ ARjs.Profile.prototype._guessPerformanceLabel = function () {
  * reset all parameters
  */
 ARjs.Profile.prototype.reset = function () {
-    this.sourceParameters = {
-        // to read from the webcam
-        sourceType: 'webcam',
-    }
+	this.sourceParameters = {
+		// to read from the webcam 
+		sourceType : 'webcam',
+	}
 
-    this.contextParameters = {
-        cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
-        detectionMode: 'mono',
-    }
-    this.defaultMarkerParameters = {
-        type: 'pattern',
-        patternUrl: THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro',
-        changeMatrixMode: 'modelViewMatrix',
-    }
-    return this
+	this.contextParameters = {
+		cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
+		detectionMode: 'mono',
+	}
+	this.defaultMarkerParameters = {
+		type : 'pattern',
+		patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro',
+		changeMatrixMode: 'modelViewMatrix',
+	}
+	return this
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -5721,36 +5721,36 @@ ARjs.Profile.prototype.reset = function () {
 
 
 
-ARjs.Profile.prototype.performance = function (label) {
+ARjs.Profile.prototype.performance = function(label) {
 
-    if (label === 'default') {
-        label = this._guessPerformanceLabel()
-    }
+	if( label === 'default' ){
+		label = this._guessPerformanceLabel()
+	}
 
-    if (label === 'desktop-fast') {
-        this.contextParameters.canvasWidth = 640 * 3
-        this.contextParameters.canvasHeight = 480 * 3
+	if( label === 'desktop-fast' ){
+		this.contextParameters.canvasWidth = 640*3
+		this.contextParameters.canvasHeight = 480*3
 
-        this.contextParameters.maxDetectionRate = 30
-    } else if (label === 'desktop-normal') {
-        this.contextParameters.canvasWidth = 640
-        this.contextParameters.canvasHeight = 480
+		this.contextParameters.maxDetectionRate = 30
+	}else if( label === 'desktop-normal' ){
+		this.contextParameters.canvasWidth = 640
+		this.contextParameters.canvasHeight = 480
 
-        this.contextParameters.maxDetectionRate = 60
-    } else if (label === 'phone-normal') {
-        this.contextParameters.canvasWidth = 80 * 4
-        this.contextParameters.canvasHeight = 60 * 4
+		this.contextParameters.maxDetectionRate = 60
+	}else if( label === 'phone-normal' ){
+		this.contextParameters.canvasWidth = 80*4
+		this.contextParameters.canvasHeight = 60*4
 
-        this.contextParameters.maxDetectionRate = 30
-    } else if (label === 'phone-slow') {
-        this.contextParameters.canvasWidth = 80 * 3
-        this.contextParameters.canvasHeight = 60 * 3
+		this.contextParameters.maxDetectionRate = 30
+	}else if( label === 'phone-slow' ){
+		this.contextParameters.canvasWidth = 80*3
+		this.contextParameters.canvasHeight = 60*3
 
-        this.contextParameters.maxDetectionRate = 30
-    } else {
-        console.assert(false, 'unknonwn label ' + label)
-    }
-    return this
+		this.contextParameters.maxDetectionRate = 30		
+	}else {
+		console.assert(false, 'unknonwn label '+label)
+	}
+	return this
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -5759,85 +5759,85 @@ ARjs.Profile.prototype.performance = function (label) {
 
 
 ARjs.Profile.prototype.defaultMarker = function (trackingBackend) {
-    trackingBackend = trackingBackend || this.contextParameters.trackingBackend
+	trackingBackend = trackingBackend || this.contextParameters.trackingBackend
 
-    if (trackingBackend === 'artoolkit') {
-        this.contextParameters.detectionMode = 'mono'
-        this.defaultMarkerParameters.type = 'pattern'
-        this.defaultMarkerParameters.patternUrl = THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro'
-    } else if (trackingBackend === 'aruco') {
-        this.contextParameters.detectionMode = 'mono'
-        this.defaultMarkerParameters.type = 'barcode'
-        this.defaultMarkerParameters.barcodeValue = 1001
-    } else if (trackingBackend === 'tango') {
-        // FIXME temporary placeholder - to reevaluate later
-        this.defaultMarkerParameters.type = 'barcode'
-        this.defaultMarkerParameters.barcodeValue = 1001
-    } else console.assert(false)
+	if( trackingBackend === 'artoolkit' ){
+		this.contextParameters.detectionMode = 'mono'
+		this.defaultMarkerParameters.type = 'pattern'
+		this.defaultMarkerParameters.patternUrl = THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro'
+	}else if( trackingBackend === 'aruco' ){
+		this.contextParameters.detectionMode = 'mono'
+		this.defaultMarkerParameters.type = 'barcode'
+		this.defaultMarkerParameters.barcodeValue = 1001
+	}else if( trackingBackend === 'tango' ){
+		// FIXME temporary placeholder - to reevaluate later
+		this.defaultMarkerParameters.type = 'barcode'
+		this.defaultMarkerParameters.barcodeValue = 1001
+	}else console.assert(false)
 
-    return this
+	return this
 }
 //////////////////////////////////////////////////////////////////////////////
 //		Source
 //////////////////////////////////////////////////////////////////////////////
 ARjs.Profile.prototype.sourceWebcam = function () {
-    this.sourceParameters.sourceType = 'webcam'
-    delete this.sourceParameters.sourceUrl
-    return this
+	this.sourceParameters.sourceType = 'webcam'
+	delete this.sourceParameters.sourceUrl
+	return this
 }
 
 ARjs.Profile.prototype.sourceVideo = function (url) {
-    this.sourceParameters.sourceType = 'video'
-    this.sourceParameters.sourceUrl = url
-    return this
+	this.sourceParameters.sourceType = 'video'
+	this.sourceParameters.sourceUrl = url
+	return this
 }
 
 ARjs.Profile.prototype.sourceImage = function (url) {
-    this.sourceParameters.sourceType = 'image'
-    this.sourceParameters.sourceUrl = url
-    return this
+	this.sourceParameters.sourceType = 'image'
+	this.sourceParameters.sourceUrl = url
+	return this
 }
 
 //////////////////////////////////////////////////////////////////////////////
 //		trackingBackend
 //////////////////////////////////////////////////////////////////////////////
 ARjs.Profile.prototype.trackingBackend = function (trackingBackend) {
-    console.warn('stop profile.trackingBackend() obsolete function. use .trackingMethod instead')
-    this.contextParameters.trackingBackend = trackingBackend
-    return this
+	console.warn('stop profile.trackingBackend() obsolete function. use .trackingMethod instead')
+	this.contextParameters.trackingBackend = trackingBackend
+	return this
 }
 
 //////////////////////////////////////////////////////////////////////////////
 //		trackingBackend
 //////////////////////////////////////////////////////////////////////////////
 ARjs.Profile.prototype.changeMatrixMode = function (changeMatrixMode) {
-    this.defaultMarkerParameters.changeMatrixMode = changeMatrixMode
-    return this
+	this.defaultMarkerParameters.changeMatrixMode = changeMatrixMode
+	return this
 }
 
 //////////////////////////////////////////////////////////////////////////////
 //		trackingBackend
 //////////////////////////////////////////////////////////////////////////////
 ARjs.Profile.prototype.trackingMethod = function (trackingMethod) {
-    var data = ARjs.Utils.parseTrackingMethod(trackingMethod)
-    this.defaultMarkerParameters.markersAreaEnabled = data.markersAreaEnabled
-    this.contextParameters.trackingBackend = data.trackingBackend
-    return this
+	var data = ARjs.Utils.parseTrackingMethod(trackingMethod)
+	this.defaultMarkerParameters.markersAreaEnabled = data.markersAreaEnabled
+	this.contextParameters.trackingBackend = data.trackingBackend	
+	return this
 }
 
 /**
  * check if the profile is valid. Throw an exception is not valid
  */
 ARjs.Profile.prototype.checkIfValid = function () {
-    if (this.contextParameters.trackingBackend === 'tango') {
-        this.sourceImage(THREEx.ArToolkitContext.baseURL + '../data/images/img.jpg')
-    }
-    return this
+	if( this.contextParameters.trackingBackend === 'tango' ){
+		this.sourceImage(THREEx.ArToolkitContext.baseURL + '../data/images/img.jpg')
+	}
+	return this
 }
 var ARjs = ARjs || {}
 var THREEx = THREEx || {}
 
-ARjs.Source = THREEx.ArToolkitSource = function(parameters){
+ARjs.Source = THREEx.ArToolkitSource = function(parameters){	
 	var _this = this
 
 	this.ready = false
@@ -5856,7 +5856,7 @@ ARjs.Source = THREEx.ArToolkitSource = function(parameters){
 		// resolution of at which we initialize in the source image
 		sourceWidth: 640,
 		sourceHeight: 480,
-		// resolution displayed for the source
+		// resolution displayed for the source 
 		displayWidth: 640,
 		displayHeight: 480,
 	}
@@ -5883,7 +5883,7 @@ ARjs.Source = THREEx.ArToolkitSource = function(parameters){
 
 			_this.parameters[ key ] = newValue
 		}
-	}
+	}	
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -5893,12 +5893,12 @@ ARjs.Source.prototype.init = function(onReady, onError){
 	var _this = this
 
         if( this.parameters.sourceType === 'image' ){
-                var domElement = this._initSourceImage(onSourceReady, onError)
+                var domElement = this._initSourceImage(onSourceReady, onError)                        
         }else if( this.parameters.sourceType === 'video' ){
-                var domElement = this._initSourceVideo(onSourceReady, onError)
+                var domElement = this._initSourceVideo(onSourceReady, onError)                        
         }else if( this.parameters.sourceType === 'webcam' ){
-                // var domElement = this._initSourceWebcamOld(onSourceReady)
-                var domElement = this._initSourceWebcam(onSourceReady, onError)
+                // var domElement = this._initSourceWebcamOld(onSourceReady)                        
+                var domElement = this._initSourceWebcam(onSourceReady, onError)                        
         }else{
                 console.assert(false)
         }
@@ -5908,23 +5908,17 @@ ARjs.Source.prototype.init = function(onReady, onError){
         this.domElement.style.position = 'absolute'
         this.domElement.style.top = '0px'
         this.domElement.style.left = '0px'
-		this.domElement.style.zIndex = '-2'
-		this.domElement.setAttribute('id', 'arjs-video');
+        this.domElement.style.zIndex = '-2'
 
 	return this
         function onSourceReady(){
-        document.body.appendChild(_this.domElement);
-        window.dispatchEvent(new CustomEvent('arjs-video-loaded', {
-            detail: {
-                component: document.querySelector('#arjs-video'),
-            },
-        }));
+		document.body.appendChild(_this.domElement);
 
 		_this.ready = true
 
 		onReady && onReady()
         }
-}
+} 
 
 ////////////////////////////////////////////////////////////////////////////////
 //          init image source
@@ -5948,7 +5942,7 @@ ARjs.Source.prototype._initSourceImage = function(onReady) {
 		clearInterval(interval)
 	}, 1000/50);
 
-	return domElement
+	return domElement                
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -5979,7 +5973,7 @@ ARjs.Source.prototype._initSourceVideo = function(onReady) {
 	domElement.height = this.parameters.sourceHeight
 	domElement.style.width = this.parameters.displayWidth+'px'
 	domElement.style.height = this.parameters.displayHeight+'px'
-
+	
 	// wait until the video stream is ready
 	var interval = setInterval(function() {
 		if (!domElement.videoWidth)	return;
@@ -5997,10 +5991,8 @@ ARjs.Source.prototype._initSourceWebcam = function(onReady, onError) {
 	var _this = this
 
 	// init default value
-	onError = onError || function(error){
+	onError = onError || function(error){	
 		alert('Webcam Error\nName: '+error.name + '\nMessage: '+error.message)
-		var event = new CustomEvent('camera-error', {error: error});
-		window.dispatchEvent(event);
 	}
 
 	var domElement = document.createElement('video');
@@ -6011,8 +6003,8 @@ ARjs.Source.prototype._initSourceWebcam = function(onReady, onError) {
 	domElement.style.height = this.parameters.displayHeight+'px'
 
 	// check API is available
-	if (navigator.mediaDevices === undefined
-			|| navigator.mediaDevices.enumerateDevices === undefined
+	if (navigator.mediaDevices === undefined 
+			|| navigator.mediaDevices.enumerateDevices === undefined 
 			|| navigator.mediaDevices.getUserMedia === undefined  ){
 		if( navigator.mediaDevices === undefined )				var fctName = 'navigator.mediaDevices'
 		else if( navigator.mediaDevices.enumerateDevices === undefined )	var fctName = 'navigator.mediaDevices.enumerateDevices'
@@ -6053,14 +6045,11 @@ ARjs.Source.prototype._initSourceWebcam = function(onReady, onError) {
 		// get a device which satisfy the constraints
 		navigator.mediaDevices.getUserMedia(userMediaConstraints).then(function success(stream) {
 			// set the .src of the domElement
-            domElement.srcObject = stream;
-
-			var event = new CustomEvent('camera-init', {stream: stream});
-			window.dispatchEvent(event);
+			domElement.srcObject = stream;
 			// to start the video, when it is possible to start it only on userevent. like in android
 			document.body.addEventListener('click', function(){
 				domElement.play();
-			});
+			})
 			// domElement.play();
 
 // TODO listen to loadedmetadata instead
@@ -6102,7 +6091,7 @@ ARjs.Source.prototype.hasMobileTorch = function(){
 	if( videoTrack.getCapabilities === undefined )	return false
 
 	var capabilities = videoTrack.getCapabilities()
-
+	
 	return capabilities.torch ? true : false
 }
 
@@ -6113,7 +6102,7 @@ ARjs.Source.prototype.hasMobileTorch = function(){
 ARjs.Source.prototype.toggleMobileTorch = function(){
 	// sanity check
 	console.assert(this.hasMobileTorch() === true)
-
+		
 	var stream = arToolkitSource.domElement.srcObject
 	if( stream instanceof MediaStream === false ){
 		alert('enabling mobile torch is available only on webcam')
@@ -6126,7 +6115,7 @@ ARjs.Source.prototype.toggleMobileTorch = function(){
 
 	var videoTrack = stream.getVideoTracks()[0];
 	var capabilities = videoTrack.getCapabilities()
-
+	
 	if( !capabilities.torch ){
 		alert('no mobile torch is available on your camera')
 		return
@@ -6171,7 +6160,7 @@ ARjs.Source.prototype.onResizeElement = function(){
 	}else{
 		console.assert(false)
 	}
-
+	
 	// compute sourceAspect
 	var sourceAspect = sourceWidth / sourceHeight
 	// compute screenAspect
@@ -6183,7 +6172,7 @@ ARjs.Source.prototype.onResizeElement = function(){
 		var newWidth = sourceAspect * screenHeight
 		this.domElement.style.width = newWidth+'px'
 		this.domElement.style.marginLeft = -(newWidth-screenWidth)/2+'px'
-
+		
 		// init style.height/.marginTop to normal value
 		this.domElement.style.height = screenHeight+'px'
 		this.domElement.style.marginTop = '0px'
@@ -6192,7 +6181,7 @@ ARjs.Source.prototype.onResizeElement = function(){
 		var newHeight = 1 / (sourceAspect / screenWidth)
 		this.domElement.style.height = newHeight+'px'
 		this.domElement.style.marginTop = -(newHeight-screenHeight)/2+'px'
-
+		
 		// init style.width/.marginLeft to normal value
 		this.domElement.style.width = screenWidth+'px'
 		this.domElement.style.marginLeft = '0px'
@@ -6201,7 +6190,7 @@ ARjs.Source.prototype.onResizeElement = function(){
 /*
 ARjs.Source.prototype.copyElementSizeTo = function(otherElement){
 	otherElement.style.width = this.domElement.style.width
-	otherElement.style.height = this.domElement.style.height
+	otherElement.style.height = this.domElement.style.height	
 	otherElement.style.marginLeft = this.domElement.style.marginLeft
 	otherElement.style.marginTop = this.domElement.style.marginTop
 }
@@ -6247,28 +6236,28 @@ ARjs.Source.prototype.onResize	= function(arToolkitContext, renderer, camera){
 	}
 
 	var trackingBackend = arToolkitContext.parameters.trackingBackend
-
+	
 
 	// RESIZE DOMELEMENT
 	if( trackingBackend === 'artoolkit' ){
 
 		this.onResizeElement()
-
+		
 		var isAframe = renderer.domElement.dataset.aframeCanvas ? true : false
 		if( isAframe === false ){
-			this.copyElementSizeTo(renderer.domElement)
+			this.copyElementSizeTo(renderer.domElement)	
 		}else{
-
+			
 		}
 
 		if( arToolkitContext.arController !== null ){
-			this.copyElementSizeTo(arToolkitContext.arController.canvas)
+			this.copyElementSizeTo(arToolkitContext.arController.canvas)	
 		}
 	}else if( trackingBackend === 'aruco' ){
 		this.onResizeElement()
-		this.copyElementSizeTo(renderer.domElement)
+		this.copyElementSizeTo(renderer.domElement)	
 
-		this.copyElementSizeTo(arToolkitContext.arucoContext.canvas)
+		this.copyElementSizeTo(arToolkitContext.arucoContext.canvas)	
 	}else if( trackingBackend === 'tango' ){
 		renderer.setSize( window.innerWidth, window.innerHeight )
 	}else console.assert(false, 'unhandled trackingBackend '+trackingBackend)
@@ -6277,16 +6266,16 @@ ARjs.Source.prototype.onResize	= function(arToolkitContext, renderer, camera){
 	// UPDATE CAMERA
 	if( trackingBackend === 'artoolkit' ){
 		if( arToolkitContext.arController !== null ){
-			camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
+			camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );			
 		}
-	}else if( trackingBackend === 'aruco' ){
+	}else if( trackingBackend === 'aruco' ){	
 		camera.aspect = renderer.domElement.width / renderer.domElement.height;
-		camera.updateProjectionMatrix();
+		camera.updateProjectionMatrix();			
 	}else if( trackingBackend === 'tango' ){
 		var vrDisplay = arToolkitContext._tangoContext.vrDisplay
 		// make camera fit vrDisplay
 		if( vrDisplay && vrDisplay.displayName === "Tango VR Device" ) THREE.WebAR.resizeVRSeeThroughCamera(vrDisplay, camera)
-	}else console.assert(false, 'unhandled trackingBackend '+trackingBackend)
+	}else console.assert(false, 'unhandled trackingBackend '+trackingBackend)	
 }
 var THREEx = THREEx || {}
 
@@ -6656,7 +6645,6 @@ ARjs.Anchor = function(arSession, markerParameters){
 		// build a multiMarkerControls
 		var multiMarkerControls = ARjs.MarkersAreaControls.fromJSON(arContext, parent3D, controlledObject, multiMarkerFile)
 		this.controls = multiMarkerControls
-
 		// honor markerParameters.changeMatrixMode
 		multiMarkerControls.parameters.changeMatrixMode = markerParameters.changeMatrixMode
 
@@ -6725,53 +6713,75 @@ var ARjs = ARjs || {}
 
 /**
  * Create an debug UI for an ARjs.Anchor
- *
+ * 
  * @param {ARjs.Anchor} arAnchor - the anchor to user
  */
-ARjs.SessionDebugUI = function (arSession, tangoPointCloud) {
-    var trackingBackend = arSession.arContext.parameters.trackingBackend
+ARjs.SessionDebugUI = function(arSession, tangoPointCloud){
+	var trackingBackend = arSession.arContext.parameters.trackingBackend
 
-    this.domElement = document.createElement('div')
-    this.domElement.style.color = 'rgba(0,0,0,0.9)'
-    this.domElement.style.backgroundColor = 'rgba(127,127,127,0.5)'
-    this.domElement.style.display = 'block'
-    this.domElement.style.padding = '0.5em'
-    this.domElement.style.position = 'fixed'
-    this.domElement.style.left = '5px'
-    this.domElement.style.bottom = '10px'
-    this.domElement.style.textAlign = 'right'
+	this.domElement = document.createElement('div')
+	this.domElement.style.color = 'rgba(0,0,0,0.9)'
+	this.domElement.style.backgroundColor = 'rgba(127,127,127,0.5)'
+	this.domElement.style.display = 'inline-block'
+	this.domElement.style.padding = '0.5em'
+	this.domElement.style.margin = '0.5em'
+	this.domElement.style.textAlign = 'left'
 
-    //////////////////////////////////////////////////////////////////////////////
-    //		current-tracking-backend
-    //////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////
+	//		add title
+	//////////////////////////////////////////////////////////////////////////////
+	// var domElement = document.createElement('div')
+	// domElement.style.display = 'block'
+	// domElement.style.fontWeight = 'bold'
+	// domElement.style.fontSize = '120%'
+	// this.domElement.appendChild(domElement)
+	// domElement.innerHTML = 'AR.js Session Debug'
 
-    var domElement = document.createElement('span')
-    domElement.style.display = 'block'
-    domElement.innerHTML = '<b>trackingBackend</b> : ' + trackingBackend
-    this.domElement.appendChild(domElement)
+	//////////////////////////////////////////////////////////////////////////////
+	//		current-tracking-backend
+	//////////////////////////////////////////////////////////////////////////////
 
-    //////////////////////////////////////////////////////////////////////////////
-    //		toggle-point-cloud
-    //////////////////////////////////////////////////////////////////////////////
+	var domElement = document.createElement('span')
+	domElement.style.display = 'block'
+	this.domElement.appendChild(domElement)
+	domElement.innerHTML = '<b>trackingBackend</b> : ' +trackingBackend
+	
+	//////////////////////////////////////////////////////////////////////////////
+	//		augmented-websites
+	//////////////////////////////////////////////////////////////////////////////
 
-    if (trackingBackend === 'tango' && tangoPointCloud) {
-        var domElement = document.createElement('button')
-        this.domElement.appendChild(domElement)
+	if( ARjs.SessionDebugUI.AugmentedWebsiteURL ){
+		var domElement = document.createElement('a')
+		domElement.innerHTML = 'Share on augmented-websites'
+		domElement.style.display = 'block'
+		// domElement.setAttribute('target', '_blank')
+		domElement.href = ARjs.SessionDebugUI.AugmentedWebsiteURL + '?'+location.href
+		this.domElement.appendChild(domElement)						
+	}
 
-        domElement.id = 'buttonTangoTogglePointCloud'
-        domElement.innerHTML = 'toggle-point-cloud'
-        domElement.href = 'javascript:void(0)'
+	//////////////////////////////////////////////////////////////////////////////
+	//		toggle-point-cloud
+	//////////////////////////////////////////////////////////////////////////////
 
-        domElement.addEventListener('click', function () {
-            var scene = arSession.parameters.scene
+	if( trackingBackend === 'tango' && tangoPointCloud ){
+		var domElement = document.createElement('button')
+		this.domElement.appendChild(domElement)
 
-            if (tangoPointCloud.object3d.parent) {
-                scene.remove(tangoPointCloud.object3d)
-            } else {
-                scene.add(tangoPointCloud.object3d)
-            }
-        })
-    }
+		domElement.id= 'buttonTangoTogglePointCloud'
+		domElement.innerHTML = 'toggle-point-cloud'
+		domElement.href='javascript:void(0)'
+
+		domElement.addEventListener('click', function(){
+			var scene = arSession.parameters.scene
+	// TODO how tangoPointCloud, get connected here ???
+	// in arguments simply ?
+			if( tangoPointCloud.object3d.parent ){
+				scene.remove(tangoPointCloud.object3d)
+			}else{
+				scene.add(tangoPointCloud.object3d)			
+			}
+		})
+	}
 }
 
 /**
@@ -6784,103 +6794,107 @@ ARjs.SessionDebugUI.AugmentedWebsiteURL = 'https://webxr.io/augmented-website'
 //		ARjs.AnchorDebugUI
 //////////////////////////////////////////////////////////////////////////////
 
+
+
+
 /**
  * Create an debug UI for an ARjs.Anchor
- *
+ * 
  * @param {ARjs.Anchor} arAnchor - the anchor to user
  */
-ARjs.AnchorDebugUI = function (arAnchor) {
-    var arSession = arAnchor.arSession
-    var trackingBackend = arSession.arContext.parameters.trackingBackend
+ARjs.AnchorDebugUI = function(arAnchor){
+	var _this = this 
+	var arSession = arAnchor.arSession
+	var trackingBackend = arSession.arContext.parameters.trackingBackend
+	this.domElement = document.createElement('div')
+	this.domElement.style.color = 'rgba(0,0,0,0.9)'
+	this.domElement.style.backgroundColor = 'rgba(127,127,127,0.5)'
+	this.domElement.style.display = 'inline-block'
+	this.domElement.style.padding = '0.5em'
+	this.domElement.style.margin = '0.5em'
+	this.domElement.style.textAlign = 'left'
 
-    this.domElement = document.createElement('div')
-    this.domElement.style.color = 'rgba(0,0,0,0.9)'
-    this.domElement.style.backgroundColor = 'rgba(127,127,127,0.5)'
-    this.domElement.style.display = 'inline-block'
-    this.domElement.style.padding = '0.5em'
-    this.domElement.style.margin = '0.5em'
-    this.domElement.style.textAlign = 'left'
+	//////////////////////////////////////////////////////////////////////////////
+	//		add title
+	//////////////////////////////////////////////////////////////////////////////
 
-    //////////////////////////////////////////////////////////////////////////////
-    //		current-tracking-backend
-    //////////////////////////////////////////////////////////////////////////////
+	// var domElement = document.createElement('div')
+	// domElement.style.display = 'block'
+	// domElement.style.fontWeight = 'bold'
+	// domElement.style.fontSize = '120%'
+	// this.domElement.appendChild(domElement)
+	// domElement.innerHTML = 'Anchor Marker Debug'
 
-    var domElement = document.createElement('span')
-    domElement.style.display = 'block'
-    domElement.style.padding = '0.5em'
-    domElement.style.color = 'rgba(0,0,0,0.9)'
-    domElement.style.backgroundColor = 'rgba(127,127,127,0.5)'
-    domElement.style.position = 'fixed'
-    domElement.style.left = '5px'
-    domElement.style.bottom = '40px'
+	//////////////////////////////////////////////////////////////////////////////
+	//		current-tracking-backend
+	//////////////////////////////////////////////////////////////////////////////
 
-    this.domElement.appendChild(domElement)
-    domElement.innerHTML = '<b>markersAreaEnabled</b> :' + arAnchor.parameters.markersAreaEnabled
+	var domElement = document.createElement('span')
+	domElement.style.display = 'block'
+	this.domElement.appendChild(domElement)
+	domElement.innerHTML = '<b>markersAreaEnabled</b> :' +arAnchor.parameters.markersAreaEnabled
 
-    //////////////////////////////////////////////////////////////////////////////
-    //		toggle-marker-helper
-    //////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////
+	//		toggle-marker-helper
+	//////////////////////////////////////////////////////////////////////////////
 
-    if (arAnchor.parameters.markersAreaEnabled) {
-        var domElement = document.createElement('button')
-        domElement.style.display = 'block'
-        this.domElement.style.padding = '0.5em'
-        this.domElement.style.position = 'fixed'
-        this.domElement.style.textAlign = 'left'
-        this.domElement.appendChild(domElement)
+	if( arAnchor.parameters.markersAreaEnabled ){
+		var domElement = document.createElement('button')
+		domElement.style.display = 'block'
+		this.domElement.appendChild(domElement)
 
-        domElement.id = 'buttonToggleMarkerHelpers'
-        domElement.innerHTML = 'toggle-marker-helper'
-        domElement.href = 'javascript:void(0)'
+		domElement.id= 'buttonToggleMarkerHelpers'
+		domElement.innerHTML = 'toggle-marker-helper'
+		domElement.href='javascript:void(0)'
 
-        var subMarkerHelpersVisible = false
-        domElement.addEventListener('click', function () {
-            subMarkerHelpersVisible = subMarkerHelpersVisible ? false : true
-            arAnchor.markersArea.setSubMarkersVisibility(subMarkerHelpersVisible)
-        })
-    }
+		var subMarkerHelpersVisible = false
+		domElement.addEventListener('click', function(){
+			subMarkerHelpersVisible = subMarkerHelpersVisible ? false : true
+			arAnchor.markersArea.setSubMarkersVisibility(subMarkerHelpersVisible)		
+		})
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////
+	//		Learn-new-marker-area
+	//////////////////////////////////////////////////////////////////////////////
 
-    //////////////////////////////////////////////////////////////////////////////
-    //		Learn-new-marker-area
-    //////////////////////////////////////////////////////////////////////////////
+	if( arAnchor.parameters.markersAreaEnabled ){
+		var domElement = document.createElement('button')
+		domElement.style.display = 'block'
+		this.domElement.appendChild(domElement)
 
-    if (arAnchor.parameters.markersAreaEnabled) {
-        var domElement = document.createElement('button')
-        domElement.style.display = 'block'
-        this.domElement.appendChild(domElement)
+		domElement.id = 'buttonMarkersAreaLearner'
+		domElement.innerHTML = 'Learn-new-marker-area'
+		domElement.href ='javascript:void(0)'
 
-        domElement.id = 'buttonMarkersAreaLearner'
-        domElement.innerHTML = 'Learn-new-marker-area'
-        domElement.href = 'javascript:void(0)'
+		domElement.addEventListener('click', function(){
+			if( ARjs.AnchorDebugUI.MarkersAreaLearnerURL !== null ){
+				var learnerURL = ARjs.AnchorDebugUI.MarkersAreaLearnerURL
+			}else{
+				var learnerURL = ARjs.Context.baseURL + 'examples/multi-markers/examples/learner.html'
+			}
+			ARjs.MarkersAreaUtils.navigateToLearnerPage(learnerURL, trackingBackend)
+		})	
+	}
 
-        domElement.addEventListener('click', function () {
-            if (ARjs.AnchorDebugUI.MarkersAreaLearnerURL !== null) {
-                var learnerURL = ARjs.AnchorDebugUI.MarkersAreaLearnerURL
-            } else {
-                var learnerURL = ARjs.Context.baseURL + 'examples/multi-markers/examples/learner.html'
-            }
-            ARjs.MarkersAreaUtils.navigateToLearnerPage(learnerURL, trackingBackend)
-        })
-    }
+	//////////////////////////////////////////////////////////////////////////////
+	//		Reset-marker-area
+	//////////////////////////////////////////////////////////////////////////////
 
-    //////////////////////////////////////////////////////////////////////////////
-    //		Reset-marker-area
-    //////////////////////////////////////////////////////////////////////////////
+	if( arAnchor.parameters.markersAreaEnabled ){
+		var domElement = document.createElement('button')
+		domElement.style.display = 'block'
+		this.domElement.appendChild(domElement)
 
-    if (arAnchor.parameters.markersAreaEnabled) {
-        var domElement = document.createElement('button')
-        domElement.style.display = 'block'
-        this.domElement.appendChild(domElement)
+		domElement.id = 'buttonMarkersAreaReset'
+		domElement.innerHTML = 'Reset-marker-area'
+		domElement.href ='javascript:void(0)'
 
-        domElement.id = 'buttonMarkersAreaReset'
-        domElement.innerHTML = 'Reset-marker-area'
-        domElement.href = 'javascript:void(0)'
-
-        domElement.addEventListener('click', function () {
-            ARjs.MarkersAreaUtils.storeDefaultMultiMarkerFile(trackingBackend)
-            location.reload()
-        })
-    }
+		domElement.addEventListener('click', function(){
+			ARjs.MarkersAreaUtils.storeDefaultMultiMarkerFile(trackingBackend)
+			location.reload()
+		})
+	}
 }
 
 /**
@@ -7982,6 +7996,7 @@ ARjs.MarkersAreaUtils.navigateToLearnerPage = function(learnerBaseURL, trackingB
 		trackingBackend: trackingBackend,
 		markersControlsParameters: ARjs.MarkersAreaUtils.createDefaultMarkersControlsParameters(trackingBackend),
 	}
+  
 	location.href = learnerBaseURL + '?' + encodeURIComponent(JSON.stringify(learnerParameters))
 }
 
@@ -8247,196 +8262,196 @@ ARjs.MarkersAreaUtils.buildMarkersAreaFileFromResolution = function(trackingBack
 //		arjs-anchor
 //////////////////////////////////////////////////////////////////////////////
 AFRAME.registerComponent('arjs-anchor', {
-    dependencies: ['arjs', 'artoolkit'],
-    schema: {
-        preset: {
-            type: 'string',
-        },
-        markerhelpers: {	// IIF preset === 'area'
-            type: 'boolean',
-            default: false,
-        },
+	dependencies: ['arjs', 'artoolkit'],
+	schema: {
+		preset: {
+			type: 'string',
+		},
+		markerhelpers : {	// IIF preset === 'area'
+			type: 'boolean',
+			default: false,
+		},
 
-        // controls parameters
-        size: {
-            type: 'number',
-            default: 1
-        },
-        type: {
-            type: 'string',
-        },
-        patternUrl: {
-            type: 'string',
-        },
-        barcodeValue: {
-            type: 'number'
-        },
-        changeMatrixMode: {
-            type: 'string',
-            default: 'modelViewMatrix',
-        },
-        minConfidence: {
-            type: 'number',
-            default: 0.6,
-        },
-        smooth: {
-            type: 'boolean',
-            default: false,
-        },
-        smoothCount: {
-            type: 'number',
-            default: 5,
-        },
-        smoothTolerance: {
-            type: 'number',
-            default: 0.01,
-        },
-        smoothThreshold: {
-            type: 'number',
-            default: 2,
-        },
-    },
-    init: function () {
-        var _this = this
+		// controls parameters
+		size: {
+			type: 'number',
+			default: 1
+		},
+		type: {
+			type: 'string',
+		},
+		patternUrl: {
+			type: 'string',
+		},
+		barcodeValue: {
+			type: 'number'
+		},
+		changeMatrixMode: {
+			type: 'string',
+			default : 'modelViewMatrix',
+		},
+		minConfidence: {
+			type: 'number',
+			default: 0.6,
+		},
+		smooth: {
+			type: 'boolean',
+			default: false,
+		},
+		smoothCount: {
+			type: 'number',
+			default: 5,
+		},
+		smoothTolerance: {
+			type: 'number',
+			default: 0.01,
+		},
+		smoothThreshold: {
+			type: 'number',
+			default: 2,
+		},
+	},
+	init: function () {
+		var _this = this
 
-        // get arjsSystem
-        var arjsSystem = this.el.sceneEl.systems.arjs || this.el.sceneEl.systems.artoolkit
+		// get arjsSystem
+		var arjsSystem = this.el.sceneEl.systems.arjs || this.el.sceneEl.systems.artoolkit
 
-        //////////////////////////////////////////////////////////////////////////////
-        //		Code Separator
-        //////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
+		//		Code Separator
+		//////////////////////////////////////////////////////////////////////////////
 
-        _this.isReady = false
-        _this._arAnchor = null
+		_this.isReady = false
+		_this._arAnchor = null
 
-        // honor object visibility
-        if (_this.data.changeMatrixMode === 'modelViewMatrix') {
-            _this.el.object3D.visible = false
-        } else if (_this.data.changeMatrixMode === 'cameraTransformMatrix') {
-            _this.el.sceneEl.object3D.visible = false
-        } else console.assert(false)
+		// honor object visibility
+		if( _this.data.changeMatrixMode === 'modelViewMatrix' ){
+			_this.el.object3D.visible = false
+		}else if( _this.data.changeMatrixMode === 'cameraTransformMatrix' ){
+ 			_this.el.sceneEl.object3D.visible = false
+		}else console.assert(false)
 
-        // trick to wait until arjsSystem is isReady
-        var startedAt = Date.now()
-        var timerId = setInterval(function () {
-            // wait until the system is isReady
-            if (arjsSystem.isReady === false) return
+		// trick to wait until arjsSystem is isReady
+		var startedAt = Date.now()
+		var timerId = setInterval(function(){
+			// wait until the system is isReady
+			if( arjsSystem.isReady === false )	return
 
-            clearInterval(timerId)
+			clearInterval(timerId)
 
-            //////////////////////////////////////////////////////////////////////////////
-            //		update arProfile
-            //////////////////////////////////////////////////////////////////////////////
-            var arProfile = arjsSystem._arProfile
+			//////////////////////////////////////////////////////////////////////////////
+			//		update arProfile
+			//////////////////////////////////////////////////////////////////////////////
+			var arProfile = arjsSystem._arProfile
 
-            // arProfile.changeMatrixMode('modelViewMatrix')
-            arProfile.changeMatrixMode(_this.data.changeMatrixMode)
+			// arProfile.changeMatrixMode('modelViewMatrix')
+			arProfile.changeMatrixMode(_this.data.changeMatrixMode)
 
-            // honor this.data.preset
-            var markerParameters = Object.assign({}, arProfile.defaultMarkerParameters)
+			// honor this.data.preset
+			var markerParameters = Object.assign({}, arProfile.defaultMarkerParameters)
 
-            if (_this.data.preset === 'hiro') {
-                markerParameters.type = 'pattern'
-                markerParameters.patternUrl = THREEx.ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-hiro.patt'
-                markerParameters.markersAreaEnabled = false
-            } else if (_this.data.preset === 'kanji') {
-                markerParameters.type = 'pattern'
-                markerParameters.patternUrl = THREEx.ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-kanji.patt'
-                markerParameters.markersAreaEnabled = false
-            } else if (_this.data.preset === 'area') {
-                markerParameters.type = 'barcode'
-                markerParameters.barcodeValue = 1001
-                markerParameters.markersAreaEnabled = true
-            } else if (_this.data.type === 'barcode') {
-                markerParameters = {
-                    type: _this.data.type,
-                    changeMatrixMode: 'modelViewMatrix',
-                    barcodeValue: _this.data.barcodeValue,
-                    markersAreaEnabled: false
-                }
-            } else if (_this.data.type === 'pattern') {
-                markerParameters.type = _this.data.type
-                markerParameters.patternUrl = _this.data.patternUrl;
-                markerParameters.markersAreaEnabled = false
-            } else {
-                // console.assert( this.data.preset === '', 'illegal preset value '+this.data.preset)
-            }
+			if( _this.data.preset === 'hiro' ){
+				markerParameters.type = 'pattern'
+				markerParameters.patternUrl = THREEx.ArToolkitContext.baseURL+'examples/marker-training/examples/pattern-files/pattern-hiro.patt'
+				markerParameters.markersAreaEnabled = false
+			}else if( _this.data.preset === 'kanji' ){
+				markerParameters.type = 'pattern'
+				markerParameters.patternUrl = THREEx.ArToolkitContext.baseURL+'examples/marker-training/examples/pattern-files/pattern-kanji.patt'
+				markerParameters.markersAreaEnabled = false
+			}else if( _this.data.preset === 'area' ){
+				markerParameters.type = 'barcode'
+				markerParameters.barcodeValue = 1001
+				markerParameters.markersAreaEnabled = true
+			}else if( _this.data.type === 'barcode' ){
+				markerParameters = {
+					type:               _this.data.type,
+					changeMatrixMode:   'modelViewMatrix',
+					barcodeValue:       _this.data.barcodeValue,
+					markersAreaEnabled: false
+				}
+			}else if( _this.data.type === 'pattern' ){
+				markerParameters.type = _this.data.type
+				markerParameters.patternUrl = _this.data.patternUrl;
+				markerParameters.markersAreaEnabled = false
+			}else {
+				// console.assert( this.data.preset === '', 'illegal preset value '+this.data.preset)
+			}
 
-            markerParameters.smooth = _this.data.smooth;
-            markerParameters.smoothCount = _this.data.smoothCount;
-            markerParameters.smoothTolerance = _this.data.smoothTolerance;
-            markerParameters.smoothThreshold = _this.data.smoothThreshold;
+			markerParameters.smooth = _this.data.smooth;
+			markerParameters.smoothCount = _this.data.smoothCount;
+			markerParameters.smoothTolerance = _this.data.smoothTolerance;
+			markerParameters.smoothThreshold = _this.data.smoothThreshold;
 
-            //////////////////////////////////////////////////////////////////////////////
-            //		create arAnchor
-            //////////////////////////////////////////////////////////////////////////////
+			//////////////////////////////////////////////////////////////////////////////
+			//		create arAnchor
+			//////////////////////////////////////////////////////////////////////////////
 
-            var arSession = arjsSystem._arSession
-            var arAnchor = _this._arAnchor = new ARjs.Anchor(arSession, markerParameters)
+			var arSession = arjsSystem._arSession
+			var arAnchor  = _this._arAnchor = new ARjs.Anchor(arSession, markerParameters)
 
-            // it is now considered isReady
-            _this.isReady = true
+			// it is now considered isReady
+			_this.isReady = true
 
-            //////////////////////////////////////////////////////////////////////////////
-            //		honor .debugUIEnabled
-            //////////////////////////////////////////////////////////////////////////////
-            if (arjsSystem.data.debugUIEnabled) {
-                // get or create containerElement
-                var containerElement = document.querySelector('#arjsDebugUIContainer')
-                if (containerElement === null) {
-                    containerElement = document.createElement('div')
-                    containerElement.id = 'arjsDebugUIContainer'
-                    containerElement.setAttribute('style', 'position: fixed; bottom: 10px; width:100%; text-align: center; z-index: 1; color: grey;')
-                    document.body.appendChild(containerElement)
-                }
-                // create anchorDebugUI
-                var anchorDebugUI = new ARjs.AnchorDebugUI(arAnchor)
-                containerElement.appendChild(anchorDebugUI.domElement)
-            }
-        }, 1000 / 60)
-    },
-    remove: function () {
-    },
-    update: function () {
-    },
-    tick: function () {
-        var _this = this
-        // if not yet isReady, do nothing
-        if (this.isReady === false) return
+			//////////////////////////////////////////////////////////////////////////////
+			//		honor .debugUIEnabled
+			//////////////////////////////////////////////////////////////////////////////
+			if( arjsSystem.data.debugUIEnabled ){
+				// get or create containerElement
+				var containerElement = document.querySelector('#arjsDebugUIContainer')
+				if( containerElement === null ){
+					containerElement = document.createElement('div')
+					containerElement.id = 'arjsDebugUIContainer'
+					containerElement.setAttribute('style', 'position: fixed; bottom: 10px; width:100%; text-align: center; z-index: 1; color: grey;')
+					document.body.appendChild(containerElement)
+				}
+				// create anchorDebugUI
+				var anchorDebugUI = new ARjs.AnchorDebugUI(arAnchor)
+				containerElement.appendChild(anchorDebugUI.domElement)
+			}
+		}, 1000/60)
+	},
+	remove : function(){
+	},
+	update: function () {
+	},
+	tick: function(){
+		var _this = this
+		// if not yet isReady, do nothing
+		if( this.isReady === false )	return
 
-        //////////////////////////////////////////////////////////////////////////////
-        //		update arAnchor
-        //////////////////////////////////////////////////////////////////////////////
-        var arjsSystem = this.el.sceneEl.systems.arjs || this.el.sceneEl.systems.artoolkit
-        this._arAnchor.update()
+		//////////////////////////////////////////////////////////////////////////////
+		//		update arAnchor
+		//////////////////////////////////////////////////////////////////////////////
+		var arjsSystem = this.el.sceneEl.systems.arjs || this.el.sceneEl.systems.artoolkit
+		this._arAnchor.update()
 
-        //////////////////////////////////////////////////////////////////////////////
-        //		honor pose
-        //////////////////////////////////////////////////////////////////////////////
-        var arWorldRoot = this._arAnchor.object3d
-        arWorldRoot.updateMatrixWorld(true)
-        arWorldRoot.matrixWorld.decompose(this.el.object3D.position, this.el.object3D.quaternion, this.el.object3D.scale)
+		//////////////////////////////////////////////////////////////////////////////
+		//		honor pose
+		//////////////////////////////////////////////////////////////////////////////
+		var arWorldRoot = this._arAnchor.object3d
+		arWorldRoot.updateMatrixWorld(true)
+		arWorldRoot.matrixWorld.decompose(this.el.object3D.position, this.el.object3D.quaternion, this.el.object3D.scale)
 
-        //////////////////////////////////////////////////////////////////////////////
-        //		honor visibility
-        //////////////////////////////////////////////////////////////////////////////
-        if (_this._arAnchor.parameters.changeMatrixMode === 'modelViewMatrix') {
-            var wasVisible = _this.el.object3D.visible
-            _this.el.object3D.visible = this._arAnchor.object3d.visible
-        } else if (_this._arAnchor.parameters.changeMatrixMode === 'cameraTransformMatrix') {
-            var wasVisible = _this.el.sceneEl.object3D.visible
-            _this.el.sceneEl.object3D.visible = this._arAnchor.object3d.visible
-        } else console.assert(false)
+		//////////////////////////////////////////////////////////////////////////////
+		//		honor visibility
+		//////////////////////////////////////////////////////////////////////////////
+		if( _this._arAnchor.parameters.changeMatrixMode === 'modelViewMatrix' ){
+			var wasVisible = _this.el.object3D.visible
+			_this.el.object3D.visible = this._arAnchor.object3d.visible
+		}else if( _this._arAnchor.parameters.changeMatrixMode === 'cameraTransformMatrix' ){
+			var wasVisible = _this.el.sceneEl.object3D.visible
+			_this.el.sceneEl.object3D.visible = this._arAnchor.object3d.visible
+		}else console.assert(false)
 
-        // emit markerFound markerLost
-        if (_this._arAnchor.object3d.visible === true && wasVisible === false) {
-            _this.el.emit('markerFound')
-        } else if (_this._arAnchor.object3d.visible === false && wasVisible === true) {
-            _this.el.emit('markerLost')
-        }
+		// emit markerFound markerLost
+		if( _this._arAnchor.object3d.visible === true && wasVisible === false ){
+			_this.el.emit('markerFound')
+		}else if( _this._arAnchor.object3d.visible === false && wasVisible === true ){
+			_this.el.emit('markerLost')
+		}
 
 
-    }
+	}
 })
 
 //////////////////////////////////////////////////////////////////////////////
@@ -8444,36 +8459,36 @@ AFRAME.registerComponent('arjs-anchor', {
 //////////////////////////////////////////////////////////////////////////////
 
 AFRAME.registerPrimitive('a-anchor', AFRAME.utils.extendDeep({}, AFRAME.primitives.getMeshMixin(), {
-    defaultComponents: {
-        'arjs-anchor': {},
-        'arjs-hit-testing': {},
-    },
-    mappings: {
-        'type': 'arjs-anchor.type',
-        'size': 'arjs-anchor.size',
-        'url': 'arjs-anchor.patternUrl',
-        'value': 'arjs-anchor.barcodeValue',
-        'preset': 'arjs-anchor.preset',
-        'min-confidence': 'arjs-anchor.minConfidence',
-        'marker-helpers': 'arjs-anchor.markerhelpers',
-        'smooth': 'arjs-anchor.smooth',
-        'smooth-count': 'arjs-anchor.smoothCount',
-        'smooth-tolerance': 'arjs-anchor.smoothTolerance',
-        'smooth-threshold': 'arjs-anchor.smoothThreshold',
+	defaultComponents: {
+		'arjs-anchor': {},
+		'arjs-hit-testing': {},
+	},
+	mappings: {
+		'type': 'arjs-anchor.type',
+		'size': 'arjs-anchor.size',
+		'url': 'arjs-anchor.patternUrl',
+		'value': 'arjs-anchor.barcodeValue',
+		'preset': 'arjs-anchor.preset',
+		'min-confidence': 'arjs-anchor.minConfidence',
+		'marker-helpers': 'arjs-anchor.markerhelpers',
+		'smooth': 'arjs-anchor.smooth',
+		'smooth-count': 'arjs-anchor.smoothCount',
+		'smooth-tolerance': 'arjs-anchor.smoothTolerance',
+		'smooth-threshold': 'arjs-anchor.smoothThreshold',
 
-        'hit-testing-render-debug': 'arjs-hit-testing.renderDebug',
-        'hit-testing-enabled': 'arjs-hit-testing.enabled',
-    }
+		'hit-testing-render-debug': 'arjs-hit-testing.renderDebug',
+		'hit-testing-enabled': 'arjs-hit-testing.enabled',
+	}
 }))
 
 
 
 AFRAME.registerPrimitive('a-camera-static', AFRAME.utils.extendDeep({}, AFRAME.primitives.getMeshMixin(), {
-    defaultComponents: {
-        'camera': {},
-    },
-    mappings: {
-    }
+	defaultComponents: {
+		'camera': {},
+	},
+	mappings: {
+	}
 }))
 
 //////////////////////////////////////////////////////////////////////////////
@@ -8481,44 +8496,44 @@ AFRAME.registerPrimitive('a-camera-static', AFRAME.utils.extendDeep({}, AFRAME.p
 //////////////////////////////////////////////////////////////////////////////
 // FIXME
 AFRAME.registerPrimitive('a-marker', AFRAME.utils.extendDeep({}, AFRAME.primitives.getMeshMixin(), {
-    defaultComponents: {
-        'arjs-anchor': {},
-        'arjs-hit-testing': {},
-    },
-    mappings: {
-        'type': 'arjs-anchor.type',
-        'size': 'arjs-anchor.size',
-        'url': 'arjs-anchor.patternUrl',
-        'value': 'arjs-anchor.barcodeValue',
-        'preset': 'arjs-anchor.preset',
-        'min-confidence': 'arjs-anchor.minConfidence',
-        'marker-helpers': 'arjs-anchor.markerhelpers',
-        'smooth': 'arjs-anchor.smooth',
-        'smooth-count': 'arjs-anchor.smoothCount',
-        'smooth-tolerance': 'arjs-anchor.smoothTolerance',
-        'smooth-threshold': 'arjs-anchor.smoothThreshold',
+	defaultComponents: {
+		'arjs-anchor': {},
+		'arjs-hit-testing': {},
+	},
+	mappings: {
+		'type': 'arjs-anchor.type',
+		'size': 'arjs-anchor.size',
+		'url': 'arjs-anchor.patternUrl',
+		'value': 'arjs-anchor.barcodeValue',
+		'preset': 'arjs-anchor.preset',
+		'min-confidence': 'arjs-anchor.minConfidence',
+		'marker-helpers': 'arjs-anchor.markerhelpers',
+		'smooth': 'arjs-anchor.smooth',
+		'smooth-count': 'arjs-anchor.smoothCount',
+		'smooth-tolerance': 'arjs-anchor.smoothTolerance',
+		'smooth-threshold': 'arjs-anchor.smoothThreshold',
 
-        'hit-testing-render-debug': 'arjs-hit-testing.renderDebug',
-        'hit-testing-enabled': 'arjs-hit-testing.enabled',
-    }
+		'hit-testing-render-debug': 'arjs-hit-testing.renderDebug',
+		'hit-testing-enabled': 'arjs-hit-testing.enabled',
+	}
 }))
 
 AFRAME.registerPrimitive('a-marker-camera', AFRAME.utils.extendDeep({}, AFRAME.primitives.getMeshMixin(), {
-    defaultComponents: {
-        'arjs-anchor': {
-            changeMatrixMode: 'cameraTransformMatrix'
-        },
-        'camera': {},
-    },
-    mappings: {
-        'type': 'arjs-anchor.type',
-        'size': 'arjs-anchor.size',
-        'url': 'arjs-anchor.patternUrl',
-        'value': 'arjs-anchor.barcodeValue',
-        'preset': 'arjs-anchor.preset',
-        'min-confidence': 'arjs-anchor.minConfidence',
-        'marker-helpers': 'arjs-anchor.markerhelpers',
-    }
+	defaultComponents: {
+		'arjs-anchor': {
+			changeMatrixMode: 'cameraTransformMatrix'
+		},
+		'camera': {},
+	},
+	mappings: {
+		'type': 'arjs-anchor.type',
+		'size': 'arjs-anchor.size',
+		'url': 'arjs-anchor.patternUrl',
+		'value': 'arjs-anchor.barcodeValue',
+		'preset': 'arjs-anchor.preset',
+		'min-confidence': 'arjs-anchor.minConfidence',
+		'marker-helpers': 'arjs-anchor.markerhelpers',
+	}
 }))
 //////////////////////////////////////////////////////////////////////////////
 //		arjs-hit-testing
@@ -8601,263 +8616,278 @@ AFRAME.registerComponent('arjs-hit-testing', {
 	}
 });
 AFRAME.registerSystem('arjs', {
-    schema: {
-        trackingMethod: {
-            type: 'string',
-            default: 'best',
-        },
-        debugUIEnabled: {
-            type: 'boolean',
-            default: true,
-        },
-        areaLearningButton: {
-            type: 'boolean',
-            default: true,
-        },
-        performanceProfile: {
-            type: 'string',
-            default: 'default',
-        },
+	schema: {
+		trackingMethod : {
+			type: 'string',
+			default: 'best',
+		},
+		debugUIEnabled :{
+			type: 'boolean',
+			default: true,
+		},
+		areaLearningButton : {
+			type: 'boolean',
+			default: true,
+		},
+		performanceProfile : {
+			type: 'string',
+			default: 'default',
+		},
 
-        tangoPointCloudEnabled: {
-            type: 'boolean',
-            default: false,
-        },
+		tangoPointCloudEnabled : {
+			type: 'boolean',
+			default: false,
+		},
 
-        // old parameters
-        debug: {
-            type: 'boolean',
-            default: false
-        },
-        detectionMode: {
-            type: 'string',
-            default: '',
-        },
-        matrixCodeType: {
-            type: 'string',
-            default: '',
-        },
-        patternRatio: {
-            type: 'number',
-            default: -1,
-        },
-        cameraParametersUrl: {
-            type: 'string',
-            default: '',
-        },
-        maxDetectionRate: {
-            type: 'number',
-            default: -1
-        },
-        sourceType: {
-            type: 'string',
-            default: '',
-        },
-        sourceUrl: {
-            type: 'string',
-            default: '',
-        },
-        sourceWidth: {
-            type: 'number',
-            default: -1
-        },
-        sourceHeight: {
-            type: 'number',
-            default: -1
-        },
-        deviceId: {
-            type: 'string',
-            default: ''
-        },
-        displayWidth: {
-            type: 'number',
-            default: -1
-        },
-        displayHeight: {
-            type: 'number',
-            default: -1
-        },
-        canvasWidth: {
-            type: 'number',
-            default: -1
-        },
-        canvasHeight: {
-            type: 'number',
-            default: -1
-        },
-    },
+		// old parameters
+		debug : {
+			type: 'boolean',
+			default: false
+		},
+		detectionMode : {
+			type: 'string',
+			default: '',
+		},
+		matrixCodeType : {
+			type: 'string',
+			default: '',
+		},
+		patternRatio : {
+			type: 'number',
+			default: -1,
+		},
+		cameraParametersUrl : {
+			type: 'string',
+			default: '',
+		},
+		maxDetectionRate : {
+			type: 'number',
+			default: -1
+		},
+		sourceType : {
+			type: 'string',
+			default: '',
+		},
+		sourceUrl : {
+			type: 'string',
+			default: '',
+		},
+		sourceWidth : {
+			type: 'number',
+			default: -1
+		},
+		sourceHeight : {
+			type: 'number',
+			default: -1
+		},
+		deviceId : {
+			type: 'string',
+			default: ''
+		},
+		displayWidth : {
+			type: 'number',
+			default: -1
+		},
+		displayHeight : {
+			type: 'number',
+			default: -1
+		},
+		canvasWidth : {
+			type: 'number',
+			default: -1
+		},
+		canvasHeight : {
+			type: 'number',
+			default: -1
+		},
+	},
 
-    //////////////////////////////////////////////////////////////////////////////
-    //		Code Separator
-    //////////////////////////////////////////////////////////////////////////////
-
-
-    init: function () {
-        var _this = this
+	//////////////////////////////////////////////////////////////////////////////
+	//		Code Separator
+	//////////////////////////////////////////////////////////////////////////////
 
 
-        //////////////////////////////////////////////////////////////////////////////
-        //		setup arProfile
-        //////////////////////////////////////////////////////////////////////////////
-
-        var arProfile = this._arProfile = new ARjs.Profile()
-            .trackingMethod(this.data.trackingMethod)
-            .performance(this.data.performanceProfile)
-            .defaultMarker()
+	init: function () {
+		var _this = this
 
 
+		//////////////////////////////////////////////////////////////////////////////
+		//		setup arProfile
+		//////////////////////////////////////////////////////////////////////////////
 
-        //////////////////////////////////////////////////////////////////////////////
-        //		honor this.data and setup arProfile with it
-        //////////////////////////////////////////////////////////////////////////////
-
-        // honor this.data and push what has been modified into arProfile
-        if (this.data.debug !== false) arProfile.contextParameters.debug = this.data.debug
-        if (this.data.detectionMode !== '') arProfile.contextParameters.detectionMode = this.data.detectionMode
-        if (this.data.matrixCodeType !== '') arProfile.contextParameters.matrixCodeType = this.data.matrixCodeType
-        if (this.data.patternRatio !== -1) arProfile.contextParameters.patternRatio = this.data.patternRatio
-        if (this.data.cameraParametersUrl !== '') arProfile.contextParameters.cameraParametersUrl = this.data.cameraParametersUrl
-        if (this.data.maxDetectionRate !== -1) arProfile.contextParameters.maxDetectionRate = this.data.maxDetectionRate
-        if (this.data.canvasWidth !== -1) arProfile.contextParameters.canvasWidth = this.data.canvasWidth
-        if (this.data.canvasHeight !== -1) arProfile.contextParameters.canvasHeight = this.data.canvasHeight
-
-        if (this.data.sourceType !== '') arProfile.sourceParameters.sourceType = this.data.sourceType
-        if (this.data.sourceUrl !== '') arProfile.sourceParameters.sourceUrl = this.data.sourceUrl
-        if (this.data.sourceWidth !== -1) arProfile.sourceParameters.sourceWidth = this.data.sourceWidth
-        if (this.data.sourceHeight !== -1) arProfile.sourceParameters.sourceHeight = this.data.sourceHeight
-        if (this.data.deviceId !== '') arProfile.sourceParameters.deviceId = this.data.deviceId
-        if (this.data.displayWidth !== -1) arProfile.sourceParameters.displayWidth = this.data.displayWidth
-        if (this.data.displayHeight !== -1) arProfile.sourceParameters.displayHeight = this.data.displayHeight
-
-        arProfile.checkIfValid()
-
-        //////////////////////////////////////////////////////////////////////////////
-        //		Code Separator
-        //////////////////////////////////////////////////////////////////////////////
-
-        this._arSession = null
-
-        _this.isReady = false
-        _this.needsOverride = true
-
-        // wait until the renderer is isReady
-        this.el.sceneEl.addEventListener('renderstart', function () {
-            var scene = _this.el.sceneEl.object3D
-            var camera = _this.el.sceneEl.camera
-            var renderer = _this.el.sceneEl.renderer
-
-            //////////////////////////////////////////////////////////////////////////////
-            //		build ARjs.Session
-            //////////////////////////////////////////////////////////////////////////////
-            var arSession = _this._arSession = new ARjs.Session({
-                scene: scene,
-                renderer: renderer,
-                camera: camera,
-                sourceParameters: arProfile.sourceParameters,
-                contextParameters: arProfile.contextParameters
-            })
-
-            //////////////////////////////////////////////////////////////////////////////
-            //		tango specifics - _tangoPointCloud
-            //////////////////////////////////////////////////////////////////////////////
-
-            _this._tangoPointCloud = null
-            if (arProfile.contextParameters.trackingBackend === 'tango' && _this.data.tangoPointCloudEnabled) {
-                // init tangoPointCloud
-                var tangoPointCloud = _this._tangoPointCloud = new ARjs.TangoPointCloud(arSession)
-                scene.add(tangoPointCloud.object3d)
-            }
-
-            //////////////////////////////////////////////////////////////////////////////
-            //		tango specifics - _tangoVideoMesh
-            //////////////////////////////////////////////////////////////////////////////
-
-            _this._tangoVideoMesh = null
-            if (arProfile.contextParameters.trackingBackend === 'tango') {
-                // init tangoVideoMesh
-                var tangoVideoMesh = _this._tangoVideoMesh = new ARjs.TangoVideoMesh(arSession)
-
-                // override renderer.render to render tangoVideoMesh
-                var rendererRenderFct = renderer.render;
-                renderer.render = function customRender(scene, camera, renderTarget, forceClear) {
-                    renderer.autoClear = false;
-                    // clear it all
-                    renderer.clear()
-                    // render tangoVideoMesh
-                    if (arProfile.contextParameters.trackingBackend === 'tango') {
-                        // FIXME fails on three.js r84
-                        // render sceneOrtho
-                        rendererRenderFct.call(renderer, tangoVideoMesh._sceneOrtho, tangoVideoMesh._cameraOrtho, renderTarget, forceClear)
-                        // Render the perspective scene
-                        renderer.clearDepth()
-                    }
-                    // render 3d scene
-                    rendererRenderFct.call(renderer, scene, camera, renderTarget, forceClear);
-                }
-            }
-
-            //////////////////////////////////////////////////////////////////////////////
-            //		Code Separator
-            //////////////////////////////////////////////////////////////////////////////
-
-            _this.isReady = true
-
-            //////////////////////////////////////////////////////////////////////////////
-            //		awefull resize trick
-            //////////////////////////////////////////////////////////////////////////////
-            // KLUDGE
-            window.addEventListener('resize', onResize)
-            function onResize() {
-                var arSource = _this._arSession.arSource
-
-                // ugly kludge to get resize on aframe... not even sure it works
-                if (arProfile.contextParameters.trackingBackend !== 'tango') {
-                    arSource.copyElementSizeTo(document.body)
-                }
-
-                // fixing a-frame css
-                var buttonElement = document.querySelector('.a-enter-vr')
-                if (buttonElement) {
-                    buttonElement.style.position = 'fixed'
-                }
-            }
+		var arProfile = this._arProfile = new ARjs.Profile()
+			.trackingMethod(this.data.trackingMethod)
+			.performance(this.data.performanceProfile)
+			.defaultMarker()
 
 
-            //////////////////////////////////////////////////////////////////////////////
-            //		honor .debugUIEnabled
-            //////////////////////////////////////////////////////////////////////////////
-            if (_this.data.debugUIEnabled) initDebugUI()
-            function initDebugUI() {
-                // get or create containerElement
-                var containerElement = document.querySelector('#arjsDebugUIContainer')
-                if (containerElement === null) {
-                    containerElement = document.createElement('div')
-                    containerElement.id = 'arjsDebugUIContainer'
-                    containerElement.setAttribute('style', 'position: fixed; bottom: 10px; width:100%; text-align: center; z-index: 1;color: grey;')
-                    document.body.appendChild(containerElement)
-                }
 
-                // create sessionDebugUI
-                var sessionDebugUI = new ARjs.SessionDebugUI(arSession)
-                containerElement.appendChild(sessionDebugUI.domElement)
-            }
-        })
-    },
+		//////////////////////////////////////////////////////////////////////////////
+		//		honor this.data and setup arProfile with it
+		//////////////////////////////////////////////////////////////////////////////
 
-    tick: function (now, delta) {
-        var _this = this
+		// honor this.data and push what has been modified into arProfile
+		if( this.data.debug !== false )			arProfile.contextParameters.debug = this.data.debug
+		if( this.data.detectionMode !== '' )		arProfile.contextParameters.detectionMode = this.data.detectionMode
+		if( this.data.matrixCodeType !== '' )		arProfile.contextParameters.matrixCodeType = this.data.matrixCodeType
+		if( this.data.patternRatio !== -1 )		arProfile.contextParameters.patternRatio = this.data.patternRatio
+		if( this.data.cameraParametersUrl !== '' )	arProfile.contextParameters.cameraParametersUrl = this.data.cameraParametersUrl
+		if( this.data.maxDetectionRate !== -1 )		arProfile.contextParameters.maxDetectionRate = this.data.maxDetectionRate
+		if( this.data.canvasWidth !== -1 )		arProfile.contextParameters.canvasWidth = this.data.canvasWidth
+		if( this.data.canvasHeight !== -1 )		arProfile.contextParameters.canvasHeight = this.data.canvasHeight
 
-        // skip it if not yet isInitialised
-        if (this.isReady === false) return
+		if( this.data.sourceType !== '' )		arProfile.sourceParameters.sourceType = this.data.sourceType
+		if( this.data.sourceUrl !== '' )		arProfile.sourceParameters.sourceUrl = this.data.sourceUrl
+		if( this.data.sourceWidth !== -1 )		arProfile.sourceParameters.sourceWidth = this.data.sourceWidth
+		if( this.data.sourceHeight !== -1 )		arProfile.sourceParameters.sourceHeight = this.data.sourceHeight
+		if( this.data.deviceId !== '' )		arProfile.sourceParameters.deviceId = this.data.deviceId
+		if( this.data.displayWidth !== -1 )		arProfile.sourceParameters.displayWidth = this.data.displayWidth
+		if( this.data.displayHeight !== -1 )		arProfile.sourceParameters.displayHeight = this.data.displayHeight
 
-        var arSession = this._arSession
+		arProfile.checkIfValid()
 
-        // update arSession
-        this._arSession.update()
+		//////////////////////////////////////////////////////////////////////////////
+		//		Code Separator
+		//////////////////////////////////////////////////////////////////////////////
 
-        if (_this._tangoVideoMesh !== null) _this._tangoVideoMesh.update()
+		this._arSession = null
 
-        // copy projection matrix to camera
-        this._arSession.onResize()
-    },
+		_this.isReady = false
+		_this.needsOverride = true
+
+		// wait until the renderer is isReady
+		this.el.sceneEl.addEventListener('renderstart', function(){
+			var scene = _this.el.sceneEl.object3D
+			var camera = _this.el.sceneEl.camera
+			var renderer = _this.el.sceneEl.renderer
+
+			//////////////////////////////////////////////////////////////////////////////
+			//		build ARjs.Session
+			//////////////////////////////////////////////////////////////////////////////
+			var arSession = _this._arSession = new ARjs.Session({
+				scene: scene,
+				renderer: renderer,
+				camera: camera,
+				sourceParameters: arProfile.sourceParameters,
+				contextParameters: arProfile.contextParameters
+			})
+
+			//////////////////////////////////////////////////////////////////////////////
+			//		tango specifics - _tangoPointCloud
+			//////////////////////////////////////////////////////////////////////////////
+
+			_this._tangoPointCloud = null
+			if( arProfile.contextParameters.trackingBackend === 'tango' && _this.data.tangoPointCloudEnabled ){
+				// init tangoPointCloud
+				var tangoPointCloud = _this._tangoPointCloud = new ARjs.TangoPointCloud(arSession)
+				scene.add(tangoPointCloud.object3d)
+			}
+
+			//////////////////////////////////////////////////////////////////////////////
+			//		tango specifics - _tangoVideoMesh
+			//////////////////////////////////////////////////////////////////////////////
+
+			_this._tangoVideoMesh = null
+			if( arProfile.contextParameters.trackingBackend === 'tango' ){
+				// init tangoVideoMesh
+				var tangoVideoMesh = _this._tangoVideoMesh = new ARjs.TangoVideoMesh(arSession)
+
+				// override renderer.render to render tangoVideoMesh
+				var rendererRenderFct = renderer.render;
+				renderer.render = function customRender(scene, camera, renderTarget, forceClear) {
+					renderer.autoClear = false;
+					// clear it all
+					renderer.clear()
+					// render tangoVideoMesh
+					if( arProfile.contextParameters.trackingBackend === 'tango' ){
+						// FIXME fails on three.js r84
+						// render sceneOrtho
+						rendererRenderFct.call(renderer, tangoVideoMesh._sceneOrtho, tangoVideoMesh._cameraOrtho, renderTarget, forceClear)
+						// Render the perspective scene
+						renderer.clearDepth()
+					}
+					// render 3d scene
+					rendererRenderFct.call(renderer, scene, camera, renderTarget, forceClear);
+				}
+			}
+
+			//////////////////////////////////////////////////////////////////////////////
+			//		Code Separator
+			//////////////////////////////////////////////////////////////////////////////
+
+			_this.isReady = true
+
+			//////////////////////////////////////////////////////////////////////////////
+			//		awefull resize trick
+			//////////////////////////////////////////////////////////////////////////////
+			// KLUDGE
+			window.addEventListener('resize', onResize)
+			function onResize(){
+				var arSource = _this._arSession.arSource
+
+				// ugly kludge to get resize on aframe... not even sure it works
+				if( arProfile.contextParameters.trackingBackend !== 'tango' ){
+					arSource.copyElementSizeTo(document.body)
+				}
+
+				// fixing a-frame css
+				var buttonElement = document.querySelector('.a-enter-vr')
+				if( buttonElement ){
+					buttonElement.style.position = 'fixed'
+				}
+			}
+
+
+			//////////////////////////////////////////////////////////////////////////////
+			//		honor .debugUIEnabled
+			//////////////////////////////////////////////////////////////////////////////
+			if( _this.data.debugUIEnabled )	initDebugUI()
+			function initDebugUI(){
+				// get or create containerElement
+				var containerElement = document.querySelector('#arjsDebugUIContainer')
+				if( containerElement === null ){
+					containerElement = document.createElement('div')
+					containerElement.id = 'arjsDebugUIContainer'
+					containerElement.setAttribute('style', 'position: fixed; bottom: 10px; width:100%; text-align: center; z-index: 1;color: grey;')
+					document.body.appendChild(containerElement)
+				}
+
+				// create sessionDebugUI
+				var sessionDebugUI = new ARjs.SessionDebugUI(arSession)
+				containerElement.appendChild(sessionDebugUI.domElement)
+			}
+		})
+
+		//////////////////////////////////////////////////////////////////////////////
+		//		Code Separator
+		//////////////////////////////////////////////////////////////////////////////
+// TODO this is crappy - code an exponential backoff - max 1 seconds
+		// KLUDGE: kludge to write a 'resize' event
+		var startedAt = Date.now()
+		var timerId = setInterval(function(){
+			if( Date.now() - startedAt > 10000*1000 ){
+				clearInterval(timerId)
+				return
+			}
+			// onResize()
+			window.dispatchEvent(new Event('resize'));
+		}, 1000/30)
+	},
+
+	tick : function(now, delta){
+		var _this = this
+
+		// skip it if not yet isInitialised
+		if( this.isReady === false )	return
+
+		var arSession = this._arSession
+
+		// update arSession
+		this._arSession.update()
+
+		if( _this._tangoVideoMesh !== null )	_this._tangoVideoMesh.update()
+
+		// copy projection matrix to camera
+		this._arSession.onResize()
+	},
 })

@@ -1,34 +1,34 @@
 <a-scene embedded arjs>
 
     <a-assets>
-        <img id="medical" src="assets/img/medical.png">
-        <img id="weapons" src="assets/img/weapons.png">
-        <img id="fortress" src="assets/img/fortress.png">
+        <img id="medical" src="assets/experience/medical.png">
+        <img id="weapons" src="assets/experience/weapons.png">
+        <img id="fortress" src="assets/experience/fortress.png">
     </a-assets>
 
     <a-marker-camera type='pattern' url='assets/experience/pattern-map.patt'>
         <!--zombie territory A-->
-        <a-entity geometry="primitive: circle; radius:1.3;" material="side: double; color:red; opacity:0.4; height:25"
-            position="-0.3 0 -0.1" scale="0.1 0.05 0.1" rotation="-90 0 0"></a-entity>
+        <a-entity geometry="primitive: circle; radius:0.9;" material="side: double; color:red; opacity:0.4; height:25"
+            position="-0.2 0 -0.02" scale="0.1 0.1 0.1" rotation="-90 0 0"></a-entity>
         <!--end zombie territory A-->
 
         <!--fortress-->
-        <a-image src="#fortress" position="-0.1 0 0.23" scale="0.1 0.05 0.1" rotation="-90 0 0"></a-image>
-        <a-entity geometry="primitive: circle; radius:1.6;" material="side: double; color:green; opacity:0.4; height:25"
-            position="-0.1 0 0.23" scale="0.1 0.05 0.1" rotation="-90 0 0"></a-entity>
+        <a-image src="#fortress" position="-0.02 0 0.23" scale="0.1 0.1 0.1" rotation="-90 0 0"></a-image>
+        <a-entity geometry="primitive: circle; radius:0.8;" material="side: double; color:green; opacity:0.4; height:25"
+            position="-0.02 0 0.23" scale="0.1 0.1 0.1" rotation="-90 0 0"></a-entity>
         <!--end fortress-->
 
         <!--medical supplies-->
-        <a-image src="#medical" position="0.5 0 0.0.15" scale="0.1 0.05 0.1" rotation="-90 0 0"></a-image>
+        <a-image src="#medical" position="0.25 0 0" scale="0.1 0.1 0.1" rotation="-90 0 0"></a-image>
         <!--end medical supplies-->
 
         <!--zombie territory B-->
-        <a-entity geometry="primitive: circle; radius:1.4;" material="side: double; color:red; opacity:0.4; height:25"
-            position="0.2 0 0.09" scale="0.1 0.05 0.1" rotation="-90 0 0"></a-entity>
+        <a-entity geometry="primitive: circle; radius:0.6;" material="side: double; color:red; opacity:0.4; height:25"
+            position="0.1 0 0.08" scale="0.1 0.1 0.1" rotation="-90 0 0"></a-entity>
         <!--end zombie territory B-->
 
         <!--weapons supply-->
-        <a-image src="#weapons" position="-0.11 0 -0.23" scale="0.1 0.05 0.1" rotation="-90 0 0"></a-image>
+        <a-image src="#weapons" position="-0.07 0 -0.25" scale="0.1 0.1 0.1" rotation="-90 0 0"></a-image>
         <!--end weapons supply-->
     </a-marker-camera>
 </a-scene>
