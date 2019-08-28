@@ -4,7 +4,9 @@ html {
 
 body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background: #333;
+    background-image: url('/assets/img/street_zombies.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
     color: #fff;
     overflow: hidden;
 }
@@ -21,7 +23,7 @@ body {
     width: 85%;
     max-width: 640px;
     margin: auto;
-    box-shadow: 0px 0px 5em 1px #222;
+    box-shadow: 0px 0px 2em 0.5em #000;
 
 }
 
@@ -166,6 +168,7 @@ body {
     bottom:0px;
 }
 #welcomeScreen{
+    background: #000000cc;
     height:100%;
     width:100%;
 }
