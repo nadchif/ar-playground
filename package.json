@@ -1,0 +1,27 @@
+{
+  "name": "ar-playground",
+  "version": "1.0.0",
+  "description": "Random experiments with AR.js",
+  "main": "app.js",
+  "scripts": {
+    "test": "eslint assets/js/app.js",
+    "dev": "lite-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nadchif/ar-playground.git"
+  },
+  "author": "nadchif",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-google": "^0.14.0",
+    "lite-server": "^2.5.4",
+    "path": "^0.12.7"
+  },
+  "bugs": {
+    "url": "https://github.com/nadchif/ar-playground/issues"
+  },
+  "homepage": "https://github.com/nadchif/ar-playground#readme"
+}
